@@ -2,7 +2,7 @@ import pyttsx3
 
 engine = pyttsx3.init()
 
-# Configurar voz (português se disponível)
+# tentar voz em português
 voices = engine.getProperty('voices')
 for voice in voices:
     if "brazil" in voice.name.lower() or "portuguese" in voice.name.lower():

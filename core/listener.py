@@ -4,19 +4,16 @@ def listen():
     r = sr.Recognizer()
 
     with sr.Microphone() as source:
-        print("🎤 Ouvindo...")
+        print("Listening...")
         r.adjust_for_ambient_noise(source)
         audio = r.listen(source)
 
     try:
-        command = r.recognize_google(audio, language="pt-BR")
-        print("Você:", command)
-        return command.lower()
+        print("Recognizing...")
+        query = r.recognize_google(audio, language='pt-BR')
+        print("Você:", query)
+        return query.lower()
 
-    except sr.UnknownValueError:
-        print("Não entendi...")
-        return ""
-
-    except sr.RequestError:
-        print("Erro de conexão")
+    except:
+        print("Erro ao reconhecer voz")
         return ""

@@ -29,7 +29,6 @@ def executar_comando(query):
         speak(resposta)
 
 
-# LOOP PRINCIPAL
 if __name__ == "__main__":
     speak("Jarvis iniciado")
 

@@ -1,69 +1,40 @@
 from core.listener import listen
 from core.voice import speak
 from core.brain import ask_jarvis
+import os
+import webbrowser
 
-from automation.system_control import (
-    open_notepad,
-    open_chrome,
-    open_youtube,
-    open_google
-)
+def executar_comando(query):
+    
+    if "abrir youtube" in query:
+        webbrowser.open("https://youtube.com")
 
-from automation.mouse_keyboard import (
-    write,
-    press,
-    abrir_pesquisa_windows
-)
+    elif "abrir google" in query:
+        webbrowser.open("https://google.com")
 
-import time
+    elif "abrir chrome" in query:
+        os.system("start chrome")
 
-speak("Jarvis iniciado. Pronto para comandos.")
+    elif "hora" in query:
+        from datetime import datetime
+        hora = datetime.now().strftime("%H:%M")
+        speak(f"Agora são {hora}")
 
-while True:
-    command = listen()
+    elif "pesquisar" in query:
+        termo = query.replace("pesquisar", "")
+        webbrowser.open(f"https://www.google.com/search?q={termo}")
 
-    if command == "":
-        continue
-
-    # ENCERRAR
-    if "sair" in command or "desligar jarvis" in command:
-        speak("Desligando. Até mais.")
-        break
-
-    # ABRIR PROGRAMAS
-    elif "abrir bloco de notas" in command:
-        speak("Abrindo bloco de notas")
-        open_notepad()
-
-    elif "abrir chrome" in command:
-        speak("Abrindo o Chrome")
-        open_chrome()
-
-    elif "abrir youtube" in command:
-        speak("Abrindo YouTube")
-        open_youtube()
-
-    elif "abrir google" in command:
-        speak("Abrindo Google")
-        open_google()
-
-    # ESCREVER
-    elif "escrever" in command:
-        speak("O que você quer que eu escreva?")
-        texto = listen()
-        write(texto)
-        speak("Texto digitado")
-
-    # PESQUISA WINDOWS
-    elif "pesquisar" in command:
-        speak("O que deseja pesquisar?")
-        texto = listen()
-        abrir_pesquisa_windows()
-        time.sleep(1)
-        write(texto)
-        press("enter")
-
-    # IA (RESPOSTAS)
     else:
-        resposta = ask_jarvis(command)
+        resposta = ask_jarvis(query)
         speak(resposta)
+
+
+# LOOP PRINCIPAL
+if __name__ == "__main__":
+    speak("Jarvis iniciado")
+
+    while True:
+        query = listen()
+
+        if query != "":
+            executar_comando(query)

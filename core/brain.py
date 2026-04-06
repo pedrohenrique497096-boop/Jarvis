@@ -6,14 +6,12 @@ def ask_jarvis(prompt):
 
         data = {
             "model": "phi",
-            "prompt": f"Responda em português de forma natural e útil: {prompt}",
+            "prompt": f"Responda em português como um assistente inteligente: {prompt}",
             "stream": False
         }
 
         response = requests.post(url, json=data)
-        result = response.json()["response"]
-
-        return result
+        return response.json()["response"]
 
     except:
-        return "Erro ao acessar a inteligência local."
+        return "Erro ao acessar o cérebro."
